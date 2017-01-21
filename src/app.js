@@ -35,7 +35,7 @@ export const echo = (appId, token) => (req, res) => {
     // Tokenize the message text into individual words
     .split(/[^A-Za-z0-9]+/)
     // Look for the hello and hey words
-    .filter((word) => /^(hello|hey)$/i.test(word)).length)
+    .filter((word) => /^(hello|boob)$/i.test(word)).length)
 
     // Send the echo message
     send(req.body.spaceId,
