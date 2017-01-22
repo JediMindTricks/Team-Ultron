@@ -11,6 +11,15 @@ import * as https from 'https';
 import * as oauth from './oauth';
 import * as ssl from './ssl';
 import debug from 'debug';
+var watson = require('watson-developer-cloud');
+var language_translator = watson.language_translator({
+  url: 'https://gateway.watsonplatform.net/language-translator/api',
+  username: '2f08c6a1-e9a5-486e-8591-89ffab3a85a0',
+  password: 'X1wEIAaffrn5',
+  version: 'v2'
+});
+
+
 
 // Debug log
 const log = debug('watsonwork-echo-app');
@@ -37,16 +46,31 @@ export const echo = (appId, token) => (req, res) => {
     // Look for the hello and hey words
     .filter((word) => /^(hello|boob|car)$/i.test(word)).length)
 
-    // Send the echo message
-    send(req.body.spaceId,
-      util.format(
-        'Hey %s, did you say %s?',
-        req.body.userName, req.body.content),
-      token(),
-      (err, res) => {
-        if(!err)
-          log('Sent message to space %s', req.body.spaceId);
+    // Take in msg as variable
+    // Translate message
+    language_translator.translate({
+      text: req.body.content,
+      source: 'en',
+      target: 'es'
+      }, function(err, translatedResponse) {
+        if (err)
+          console.log(err)
+        else
+          console.log(translatedResponse);
+        // Send the echo message
+        send(req.body.spaceId,
+          util.format(
+            'Hey %s said: %s',
+            req.body.userName, translatedResponse.translations[0].translation),
+          token(),
+          (err, res) => {
+            if(!err)
+              log('Sent message to space %s', req.body.spaceId);
+          });
       });
+
+
+    
 };
 
 // Send an app message to the conversation in a space
