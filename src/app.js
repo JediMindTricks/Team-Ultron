@@ -32,7 +32,7 @@ export const echo = (appId, token) => (req, res) => {
   // React to 'hello' or 'hey' keywords in the message and send an echo
   // message back to the conversation in the originating space
   if(req.body.content
-    // Tokenize the message text into individual words
+    // Tokenize the message text into individual words.
     .split(/[^A-Za-z0-9]+/)
     // Look for the hello and hey words
     .filter((word) => /^(hello|boob)$/i.test(word)).length)
