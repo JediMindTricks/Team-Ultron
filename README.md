@@ -225,6 +225,9 @@ listen to conversations in a space and receive messages. Finally, it uses
 the [Watson Work Spaces API] (https://workspace.ibm.com/developer/docs) to
 send back echo messages to the space.
 
+We also used the to handle the translations. View the docs to be able to connect to [Watson Language Translator](https://www.ibm.com/watson/developercloud/doc/language-translator/)
+
+
 ## How can I contribute?
 
 Pull requests welcome!
